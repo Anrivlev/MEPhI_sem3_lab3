@@ -9,14 +9,14 @@ Graph<int>* getDefaultGraph()
 {
     Graph<int> *gr = new Graph<int>(8);
     gr->changeEdge(0, 1, 5);
-    gr->changeEdge(0, 2, 12);
+    gr->changeEdge(0, 2, 9);
     gr->changeEdge(1, 2, 4);
     gr->changeEdge(1, 4, 1);
     gr->changeEdge(2, 3, 2);
     gr->changeEdge(3, 4, 5);
     gr->changeEdge(3, 7, 4);
     gr->changeEdge(4, 5, 9);
-    gr->changeEdge(1, 5, 11);
+    gr->changeEdge(1, 5, 8);
     gr->changeEdge(5, 6, 3);
     gr->changeEdge(6, 7, 4);
     return gr;
@@ -114,29 +114,28 @@ void interfaceGraph()
     Graph<int> *gr;
     ArraySequence<int> *path;
 
+    cout << "Enter 1 to get a default graph" << endl;
+    cout << "Enter 2 to create a custom graph" << endl;
+    cout << "Enter a different number to quit" << endl;
+    cin >> choose;
+    cout << endl;
+    switch (choose)
+    {
+        case 1:
+            gr = getDefaultGraph();
+            break;
+        case 2:
+            cout << "Enter a number of vertexes" << endl;
+            cin >> choose;
+            cout << endl;
+            gr = new Graph<int>(choose);
+            break;
+        default:
+            return;
+    }
+    editGraph(gr);
     while(true)
     {
-        cout << "Enter 1 to get a default graph:" << endl;
-        cout << "Enter 2 to create a custom graph" << endl;
-        cout << "Enter a different number to quit" << endl;
-        cin >> choose;
-        cout << endl;
-
-        switch (choose)
-        {
-            case 1:
-                gr = getDefaultGraph();
-                break;
-            case 2:
-                cout << "Enter a number of vertexes" << endl;
-                cin >> choose;
-                cout << endl;
-                gr = new Graph<int>(choose);
-                break;
-            default:
-                return;
-        }
-        editGraph(gr);
         cout << "Enter 1 find a path on the graph:" << endl;
         cout << "Enter a different number to quit" << endl;
         cin >> choose;
@@ -172,7 +171,7 @@ void interfaceDirGraph()
 
     while(true)
     {
-        cout << "Enter 1 to get a default directed graph:" << endl;
+        cout << "Enter 1 to get a default directed graph" << endl;
         cout << "Enter 2 to create a custom directed graph" << endl;
         cout << "Enter a different number to quit" << endl;
         cin >> choose;
@@ -239,6 +238,6 @@ int main(int argc, const char *argv[])
         default:
             break;
     }
-    
+
 	return 0;
 }

@@ -70,6 +70,7 @@ public:
                     }
                 }
             }
+            if (beenTo.get(vert2) == true) break;
         }
         ArraySequence<int> *path = new ArraySequence<int>(0);
         if (parent.get(vert2) == -1)
