@@ -45,7 +45,7 @@ public:
     }
     ArraySequence<int>* getPath(int vert1, int vert2)
     {
-        const int INF = 10^8;
+        const int INF = 100000000;
         ArraySequence<int> dist(this->getSize());
         ArraySequence<bool> beenTo(this->getSize());
         ArraySequence<int> parent(this->getSize());
@@ -59,51 +59,44 @@ public:
         int index_min = 0;
         int temp = 0;
         dist.set(0, vert1);
+
         for(int i = 0; i < this->getSize(); i++)
         {
-            system("pause");
             min = INF;
-            index_min = INF;
             for(int j = 0; j < this->getSize(); ++j)
             {
                 if(!beenTo.get(j) && dist.get(j) < min)
                 {
                     min = dist.get(j);
                     index_min = j;
-                    cout << min << " " << index_min << endl;
                 }
             }
-            if (index_min != INF)
+            beenTo.set(true, index_min);
+            for (int j = 0; j < this->getSize(); ++j)
             {
-                for (int j = 0; j < this->getSize(); ++j)
+                if (adjMatrix->Get(index_min, j) > 0)
                 {
-                    if (adjMatrix->Get(index_min, j) > 0)
+                    temp = min + adjMatrix->Get(index_min, j);
+                    if (temp < dist.get(j))
                     {
-                        temp = min + adjMatrix->Get(index_min, j);
-                        if (temp < dist.get(j))
-                        {
-                            dist.set(temp, j);
-                            parent.set(index_min, j);
-                        }
+                        dist.set(temp, j);
+                        parent.set(index_min, j);
                     }
                 }
-                beenTo.set(true, index_min);
             }
         }
         ArraySequence<int> *path = new ArraySequence<int>(0);
-
-        for(int i  = 0; i < parent.getSize(); i++)
-            cout << parent.get(i) << " ";
-        cout << endl;
-        for(int i  = 0; i < dist.getSize(); i++)
-            cout << dist.get(i) << " ";
-        cout << endl;
-        for(int i  = 0; i < beenTo.getSize(); i++)
-            cout << beenTo.get(i) << " ";
-        cout << endl;
-
         for(int i = vert2; i != -1; i = parent.get(i))
             path->prepend(i);
         return path;
+    }
+    T getPathWeight(ArraySequence<int> *path)
+    {
+        T result = 0;
+        for (int i = 0; i < path->getSize() - 1; i++)
+        {
+            result += this->adjMatrix->Get(path->get(i), path->get(i + 1));
+        }
+        return result;
     }
 };
