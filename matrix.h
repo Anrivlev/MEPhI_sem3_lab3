@@ -156,12 +156,4 @@ public:
 		}
 		return result;
 	}
-	void addRow()
-    {
-	    this->rows++;
-    }
-    void addColumn()
-    {
-	    this->columns++;
-    }
 };
