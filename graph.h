@@ -31,6 +31,7 @@ public:
     }
     void changeEdge(int vert1, int vert2, T weight)
     {
+        if(vert1 == vert2) throw out_of_range("INCORRECT INDEX");
         this->adjMatrix->Set(weight, vert1, vert2);
         this->adjMatrix->Set(weight, vert2, vert1);
     }
@@ -46,40 +47,61 @@ public:
     {
         const int INF = 10^8;
         ArraySequence<int> dist(this->getSize());
-        for(int i = 0; i < this->getSize(); i++)
-            dist.set(INF, i);
         ArraySequence<bool> beenTo(this->getSize());
-        for(int i = 0; i < this->getSize(); i++)
-            beenTo.set(false, i);
-        int min = 0;
-        int index_min = 0;
-        dist.set(0, vert1);
         ArraySequence<int> parent(this->getSize());
         for(int i = 0; i < this->getSize(); i++)
-            parent.set(-1, i);
-
-        for (int i = 0; i < this->getSize() - 1; i++)
         {
+            dist.set(INF, i);
+            beenTo.set(false, i);
+            parent.set(-1, i);
+        }
+        int min = 0;
+        int index_min = 0;
+        int temp = 0;
+        dist.set(0, vert1);
+        for(int i = 0; i < this->getSize(); i++)
+        {
+            system("pause");
             min = INF;
-            for(int j = 0; j < this->getSize(); j++)
+            index_min = INF;
+            for(int j = 0; j < this->getSize(); ++j)
             {
                 if(!beenTo.get(j) && dist.get(j) < min)
                 {
                     min = dist.get(j);
                     index_min = j;
+                    cout << min << " " << index_min << endl;
                 }
             }
-            beenTo.set(true, index_min);
-            for (int j = 0; j < this->getSize(); j++)
+            if (index_min != INF)
             {
-                if(!beenTo.get(j) && adjMatrix->Get(index_min, j) > 0 && dist.get(index_min) != INF && dist.get(index_min) + adjMatrix->get(index_min, j) < dist.get(j))
+                for (int j = 0; j < this->getSize(); ++j)
                 {
-                    dist.set(dist.get(index_min) + adjMatrix->Get(index_min, j), j);
-                    parent.set(index_min, j);
+                    if (adjMatrix->Get(index_min, j) > 0)
+                    {
+                        temp = min + adjMatrix->Get(index_min, j);
+                        if (temp < dist.get(j))
+                        {
+                            dist.set(temp, j);
+                            parent.set(index_min, j);
+                        }
+                    }
                 }
+                beenTo.set(true, index_min);
             }
         }
         ArraySequence<int> *path = new ArraySequence<int>(0);
+
+        for(int i  = 0; i < parent.getSize(); i++)
+            cout << parent.get(i) << " ";
+        cout << endl;
+        for(int i  = 0; i < dist.getSize(); i++)
+            cout << dist.get(i) << " ";
+        cout << endl;
+        for(int i  = 0; i < beenTo.getSize(); i++)
+            cout << beenTo.get(i) << " ";
+        cout << endl;
+
         for(int i = vert2; i != -1; i = parent.get(i))
             path->prepend(i);
         return path;

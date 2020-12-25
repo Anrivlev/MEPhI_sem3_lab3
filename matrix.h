@@ -32,10 +32,13 @@ public:
 		}
 		if (rows == 0 || columns == 0)
 		{
-			rows = columns = 0;
-		}
-		this.rows = rows;
-		this.columns = columns;
+			this->rows = 0;
+			this->columns = 0;
+		} else
+        {
+            this->rows = rows;
+            this->columns = columns;
+        }
 		this->elements = (Sequence<Sequence<T>*>*) new ListSequence<ListSequence<T>*>;
 		for (int i = 0; i < rows; i++)
 		{
@@ -112,7 +115,7 @@ public:
 	{
 		if (i < 0 || i >= this->rows || j < 0 || j >= this->columns) throw std::out_of_range(INDEX_OUT_OF_RANGE_MESSAGE);
 
-		return elements->get(i).get(j);
+		return elements->get(i)->get(j);
 	}
 	void Set(T element, int i, int j)
 	{
