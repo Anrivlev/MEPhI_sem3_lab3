@@ -25,9 +25,9 @@ public:
     {
         return this->adjMatrix->GetRows();
     }
-    void print()
+    string toString()
     {
-        this->adjMatrix->Show();
+        return this->adjMatrix->toString();
     }
     ArraySequence<int>* getPath(int vert1, int vert2)
     {
@@ -87,6 +87,7 @@ public:
         T result = 0;
         for (int i = 0; i < path->getSize() - 1; i++)
         {
+            if (this->adjMatrix->Get(path->get(i), path->get(i + 1)) == 0) throw invalid_argument("INCORRECT PATH");
             result += this->adjMatrix->Get(path->get(i), path->get(i + 1));
         }
         return result;

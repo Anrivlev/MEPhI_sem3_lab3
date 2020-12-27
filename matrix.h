@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sstream>
 #include "Sequence.h"
 #include <math.h>
 
@@ -123,18 +124,6 @@ public:
 
 		this->elements->get(i)->set(element, j);
 	}
-	void Show()
-	{
-		for (int i = 0; i < this->rows; i++)
-		{
-			for (int j = 0; j < this->columns; j++)
-			{
-				T el = this->elements->get(i)->get(j);
-				cout << el << " ";
-			}
-			cout << endl;
-		}
-	}
 	Matrix operator*(const Matrix<T>& two)
 	{
 		if (this->columns != two.rows)
@@ -156,4 +145,20 @@ public:
 		}
 		return result;
 	}
+	string toString()
+    {
+	    string result = "";
+	    for(int i = 0; i < this->GetRows(); i++)
+        {
+	        for (int j = 0; j < this->GetColumns(); j++)
+            {
+	            stringstream ss;
+	            ss << this->Get(i, j);
+	            result += ss.str();
+	            result += " ";
+            }
+	        result += "\n";
+        }
+        return result;
+    }
 };

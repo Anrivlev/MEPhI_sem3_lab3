@@ -46,7 +46,7 @@ void editGraph(Graph<int> *gr)
     while(true)
     {
         cout << "Adjacency matrix:" << endl;
-        gr->print();
+        cout << gr->toString();
         cout << endl;
         cout << "Enter 1 to add or change an edge" << endl;
         cout << "Enter anything else to continue" << endl;
@@ -80,7 +80,7 @@ void editDirGraph(DirGraph<int> *gr)
     while(true)
     {
         cout << "Adjacency matrix:" << endl;
-        gr->print();
+        cout << gr->toString();
         cout << endl;
         cout << "Enter 1 to add or change an edge" << endl;
         cout << "Enter anything else to continue" << endl;
@@ -192,28 +192,31 @@ void interfaceDirGraph()
                 return;
         }
         editDirGraph(gr);
-        cout << "Enter 1 find a path on the directed graph:" << endl;
-        cout << "Enter a different number to quit" << endl;
-        cin >> choose;
-        cout << endl;
-        switch(choose)
+        while(true)
         {
-            case 1:
-                cout << "Enter a starting vertex:" << endl;
-                cin >> i;
-                cout << endl;
-                cout << "Enter an ending vertex" << endl;
-                cin >> j;
-                cout << endl;
-                path = gr->getPath(i, j);
-                cout << "The shortest path:" << endl;
-                for (int i = 0; i < path->getSize(); i++)
-                    cout << path->get(i) << " ";
-                cout << endl;
-                cout << "It's weight: " << gr->getPathWeight(path) << endl;
-                break;
-            default:
-                return;
+            cout << "Enter 1 find a path on the directed graph:" << endl;
+            cout << "Enter a different number to quit" << endl;
+            cin >> choose;
+            cout << endl;
+            switch(choose)
+            {
+                case 1:
+                    cout << "Enter a starting vertex:" << endl;
+                    cin >> i;
+                    cout << endl;
+                    cout << "Enter an ending vertex" << endl;
+                    cin >> j;
+                    cout << endl;
+                    path = gr->getPath(i, j);
+                    cout << "The shortest path:" << endl;
+                    for (int i = 0; i < path->getSize(); i++)
+                        cout << path->get(i) << " ";
+                    cout << endl;
+                    cout << "It's weight: " << gr->getPathWeight(path) << endl;
+                    break;
+                default:
+                    return;
+            }
         }
     }
 }
