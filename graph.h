@@ -15,4 +15,8 @@ public:
         this->adjMatrix->Set(weight, vert1, vert2);
         this->adjMatrix->Set(weight, vert2, vert1);
     }
+    ArraySequence<int> topologicalSort()
+    {
+        throw "CANNOT BE TOPOLOGICALLY SORTED";
+    }
 };

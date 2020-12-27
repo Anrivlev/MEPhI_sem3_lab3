@@ -247,5 +247,4 @@ public:
 		return newSequence;
 	}
 
-
 };

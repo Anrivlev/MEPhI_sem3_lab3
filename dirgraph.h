@@ -10,6 +10,19 @@ class DirGraph
 {
 protected:
     Matrix<T> *adjMatrix;
+private:
+    void _ts_(int v, bool visited[], ArraySequence<int> *stack)
+    {
+        visited[v] = true;
+        for(int i = 0; i < this->getSize(); i++)
+        {
+            if(this->adjMatrix->Get(v, i) != 0)
+            {
+                if(!visited[i]) this->_ts_(i, visited, stack);
+            }
+        }
+        stack->prepend(v);
+    }
 public:
     DirGraph(int size)
     {
@@ -91,5 +104,19 @@ public:
             result += this->adjMatrix->Get(path->get(i), path->get(i + 1));
         }
         return result;
+    }
+    ArraySequence<int>* getTopologicalSort()
+    {
+        ArraySequence<int> *stack;
+        stack = new ArraySequence<int>();
+        bool *visited = new bool[this->getSize()];
+        for (int i = 0; i < this->getSize(); i++)
+            visited[i] = false;
+        for (int i = 0; i < this->getSize(); i++)
+            if (visited[i] == false)
+            {
+                this->_ts_(i, visited, stack);
+            }
+        return stack;
     }
 };

@@ -136,7 +136,7 @@ void interfaceGraph()
     editGraph(gr);
     while(true)
     {
-        cout << "Enter 1 find a path on the graph:" << endl;
+        cout << "Enter 1 to find a path on the graph:" << endl;
         cout << "Enter a different number to quit" << endl;
         cin >> choose;
         cout << endl;
@@ -168,6 +168,7 @@ void interfaceDirGraph()
     int j = 0;
     DirGraph<int> *gr;
     ArraySequence<int> *path;
+    ArraySequence<int> *ts;
 
     while(true)
     {
@@ -194,7 +195,8 @@ void interfaceDirGraph()
         editDirGraph(gr);
         while(true)
         {
-            cout << "Enter 1 find a path on the directed graph:" << endl;
+            cout << "Enter 1 to find a path on the directed graph:" << endl;
+            cout << "Enter 2 to topologically sort the graph" << endl;
             cout << "Enter a different number to quit" << endl;
             cin >> choose;
             cout << endl;
@@ -213,6 +215,13 @@ void interfaceDirGraph()
                         cout << path->get(i) << " ";
                     cout << endl;
                     cout << "It's weight: " << gr->getPathWeight(path) << endl;
+                    break;
+                case 2:
+                    ts = gr->getTopologicalSort();
+                    cout << "The Topological sort:" << endl;
+                    for (int i = 0; i < ts->getSize(); i++)
+                        cout << ts->get(i) << " ";
+                    cout << endl;
                     break;
                 default:
                     return;
