@@ -1,11 +1,7 @@
 
-#include "sortFunctions.h"
 #include <iostream>
-#include "dictionary.h"
-#include "index.h"
-#include "matrix.h"
-#include "sparse_matrix.h"
-#include "histogram.h"
+#include "sequence.h"
+#include "graph.h"
 
 using namespace std;
 
@@ -200,237 +196,65 @@ void testListSequence(){
 
 }
 
-void testSortFunctions()
+void testDirGraph()
 {
-    ArraySequence<int> *arr0 = new ArraySequence<int>(0);
+    DirGraph<int> gr(8);
+    gr.changeEdge(0, 1, 5);
+    gr.changeEdge(0, 2, 9);
+    gr.changeEdge(1, 2, 3);
+    gr.changeEdge(1, 4, 1);
+    gr.changeEdge(2, 3, 2);
+    gr.changeEdge(3, 4, 5);
+    gr.changeEdge(3, 7, 4);
+    gr.changeEdge(4, 5, 9);
+    gr.changeEdge(1, 5, 8);
+    gr.changeEdge(5, 6, 3);
+    gr.changeEdge(6, 7, 4);
 
-    bubbleSort(arr0, desc);
-    assert(arr0->getSize() == 0);
-    mergeSort(arr0, desc);
-    assert(arr0->getSize() == 0);
-    quickSort(arr0, desc);
-    assert(arr0->getSize() == 0);
-    delete arr0;
+    ArraySequence<int> *path;
+    path = gr.getPath(6, 5);
+    assert(path->getSize() == 1);
+    assert(path->get(0) == -1);
 
+    path = gr.getPath(0,2);
+    assert(path->get(0) == 0);
+    assert(path->get(1) == 1);
+    assert(path->get(2) == 2);
+    assert(path->getSize() == 3);
+    assert(gr.getPathWeight(path) == 8);
 
-    ArraySequence<int> *arr1 = new ArraySequence<int>(1);
-    arr1->set(3, 0);
-
-    bubbleSort(arr0, desc);
-    assert(arr1->getSize() == 1);
-    assert(arr1->getFirst() == 3);
-    mergeSort(arr0, desc);
-    assert(arr1->getSize() == 1);
-    assert(arr1->getFirst() == 3);
-    quickSort(arr0, desc);
-    assert(arr1->getSize() == 1);
-    assert(arr1->getFirst() == 3);
-    delete arr1;
-
-
-    ArraySequence<int> *arr2 = new ArraySequence<int>(5);
-    arr2->set(6, 0);
-    arr2->set(3, 1);
-    arr2->set(5, 2);
-    arr2->set(7, 3);
-    arr2->set(4, 4);
-
-    bubbleSort(arr2, desc);
-    assert(arr2->getSize() == 5);
-    assert(arr2->get(0) == 7);
-    assert(arr2->get(1) == 6);
-    assert(arr2->get(2) == 5);
-    assert(arr2->get(3) == 4);
-    assert(arr2->get(4) == 3);
-
-    bubbleSort(arr2, asc);
-    assert(arr2->getSize() == 5);
-    assert(arr2->get(0) == 3);
-    assert(arr2->get(1) == 4);
-    assert(arr2->get(2) == 5);
-    assert(arr2->get(3) == 6);
-    assert(arr2->get(4) == 7);
-    delete arr2;
-
-    arr2 = new ArraySequence<int>(5);
-    arr2->set(1, 0);
-    arr2->set(1, 1);
-    arr2->set(1, 2);
-    arr2->set(1, 3);
-    arr2->set(1, 4);
-    bubbleSort(arr2, asc);
-    assert(arr2->getSize() == 5);
-    assert(arr2->get(0) == 1);
-    assert(arr2->get(1) == 1);
-    assert(arr2->get(2) == 1);
-    assert(arr2->get(3) == 1);
-    assert(arr2->get(4) == 1);
-    delete arr2;
-
-
-    arr2 = new ArraySequence<int>(5);
-    arr2->set(6, 0);
-    arr2->set(3, 1);
-    arr2->set(5, 2);
-    arr2->set(7, 3);
-    arr2->set(4, 4);
-    mergeSort(arr2, asc);
-    assert(arr2->getSize() == 5);
-    assert(arr2->get(0) == 3);
-    assert(arr2->get(1) == 4);
-    assert(arr2->get(2) == 5);
-    assert(arr2->get(3) == 6);
-    assert(arr2->get(4) == 7);
-    delete arr2;
-
-    arr2 = new ArraySequence<int>(5);
-    arr2->set(1, 0);
-    arr2->set(1, 1);
-    arr2->set(1, 2);
-    arr2->set(1, 3);
-    arr2->set(1, 4);
-    mergeSort(arr2, asc);
-    assert(arr2->getSize() == 5);
-    assert(arr2->get(0) == 1);
-    assert(arr2->get(1) == 1);
-    assert(arr2->get(2) == 1);
-    assert(arr2->get(3) == 1);
-    assert(arr2->get(4) == 1);
-    delete arr2;
-
-    arr2 = new ArraySequence<int>(5);
-    arr2->set(6, 0);
-    arr2->set(3, 1);
-    arr2->set(5, 2);
-    arr2->set(7, 3);
-    arr2->set(4, 4);
-    quickSort(arr2, asc);
-    assert(arr2->getSize() == 5);
-    assert(arr2->get(0) == 3);
-    assert(arr2->get(1) == 4);
-    assert(arr2->get(2) == 5);
-    assert(arr2->get(3) == 6);
-    assert(arr2->get(4) == 7);
-    delete arr2;
-
-    arr2 = new ArraySequence<int>(5);
-    arr2->set(1, 0);
-    arr2->set(1, 1);
-    arr2->set(1, 2);
-    arr2->set(1, 3);
-    arr2->set(1, 4);
-    quickSort(arr2, asc);
-    assert(arr2->getSize() == 5);
-    assert(arr2->get(0) == 1);
-    assert(arr2->get(1) == 1);
-    assert(arr2->get(2) == 1);
-    assert(arr2->get(3) == 1);
-    assert(arr2->get(4) == 1);
-    delete arr2;
+    delete path;
 }
 
-void testDictionary()
+void testGraph()
 {
-    bool (*cmp)(PairKE<int, int>, PairKE<int, int>) = asc;
-    Dictionary<int, int> *dict = new Dictionary<int, int>(101, 170, cmp);
-    assert(dict->containsKey(101));
-    assert(dict->get(101) == 170);
-    assert(dict->getCount() == 1);
+    Graph<int> gr(8);
+    gr.changeEdge(0, 1, 5);
+    gr.changeEdge(0, 2, 9);
+    gr.changeEdge(1, 2, 3);
+    gr.changeEdge(1, 4, 1);
+    gr.changeEdge(2, 3, 2);
+    gr.changeEdge(3, 4, 5);
+    gr.changeEdge(3, 7, 4);
+    gr.changeEdge(4, 5, 9);
+    gr.changeEdge(1, 5, 8);
+    gr.changeEdge(5, 6, 3);
+    gr.changeEdge(6, 7, 4);
 
-    dict->add(102, 101);
-    dict->add(170, 101);
-    dict->add(1, 1);
-    assert(!dict->containsKey(2));
-    assert(dict->getCount() == 4);
-    assert(dict->get(102) == 101);
-    assert(dict->get(1) == 1);
+    ArraySequence<int> *path;
+    path = gr.getPath(6, 5);
+    assert(path->get(0) == 6);
+    assert(path->get(1) == 5);
+    assert(path->getSize() == 2);
+    assert(gr.getPathWeight(path) == 3);
 
-    dict->changeElem(1, 2);
-    assert(!dict->containsKey(2));
-    assert(dict->containsKey(1));
-    assert(dict->getCount() == 4);
-    assert(dict->get(1) == 2);
-
-    dict->remove(1);
-    assert(!dict->containsKey(1));
-    assert(dict->getCount() == 3);
-
-    delete &cmp;
-    delete dict;
+    path = gr.getPath(0,2);
+    assert(path->get(0) == 0);
+    assert(path->get(1) == 1);
+    assert(path->get(2) == 2);
+    assert(path->getSize() == 3);
+    assert(gr.getPathWeight(path) == 8);
 }
-
-void testIndexDictionary()
-{
-    string (Person::*getParam)() = Person::getFirstName;
-    ArraySequence<Person> *seq = new ArraySequence<Person>();
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2001));
-    seq->append(Person("Ivan", "Ivanov", "Petrovich", 2002));
-    seq->append(Person("Andrey", "Petrov", "Ivanovich", 2003));
-
-    IndexDictionary<string> *ind_dict = new IndexDictionary<string>(*seq, getParam);
-    assert(ind_dict->get("Ivan").getBirthYear() == 2002);
-    assert(ind_dict->getCount() == 3);
-    assert(ind_dict->contains("Vadim"));
-
-    delete ind_dict;
-    delete seq;
-}
-
-void testSparseMatrix()
-{
-    SparseMatrix<int> *matrix = new SparseMatrix<int>(3, 4);
-    matrix->setRows(9);
-    matrix->setColumns(5);
-    matrix->set(3, 4, 5);
-    matrix->setToZero(1, 3);
-
-    matrix->set(2, 1, 9);
-    matrix->set(0,0,0);
-
-    assert(matrix->get(1,1) == 0);
-    assert(matrix->getColumns() == 5);
-    assert(matrix->getRows() == 9);
-    assert(matrix->getAmountOfNonZero() == 2);
-    matrix->setToZero(2, 1);
-    assert(matrix->getAmountOfNonZero() == 1);
-    assert(!matrix->isNotZero(2, 1));
-    assert(matrix->isNotZero(3,4));
-    assert(matrix->get(3,4) == 5);
-
-    delete matrix;
-}
-
-void testHistogram()
-{
-    ArraySequence<Person> *seq = new ArraySequence<Person>();
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2001));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2004));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2003));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2014));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2051));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2099));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2108));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 3008));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 2223));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 1678));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 1578));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 1890));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 1537));
-    seq->append(Person("Vadim", "Ivanov", "Ivanovich", 9999));
-
-
-    int (Person::*getParam)() = Person::getBirthYear;
-    Histogram *hist;
-
-    hist = new Histogram(*seq, getParam, 4);
-
-    assert(hist->getAmountOfSubsets() == 4);
-
-    delete seq;
-    delete &getParam;
-    delete hist;
-}
-
 
 int main(int argc, const char *argv[]){
 	testDynamicArray();
@@ -441,16 +265,10 @@ int main(int argc, const char *argv[]){
     cout << "class ArraySequence is successfully tested" << endl;
 	testListSequence();
     cout << "class ListSequence is successfully tested" << endl;
-	testSortFunctions();
-    cout << "Sort functions for class Sequence are successfully tested" << endl;
-    testDictionary();
-    cout << "class Dictionary is successfully tested" << endl;
-    testIndexDictionary();
-    cout << "class IndexDictionary is successfully tested" << endl;
-    testSparseMatrix();
-    cout << "class SparseMatrix is successfully tested" << endl;
-    testHistogram();
-    cout << "class Histogram is successfully tested" << endl;
+    testDirGraph();
+    cout << "class DirGraph is successfully tested" << endl;
+    testGraph();
+    cout << "class Graph is successfully tested" << endl;
 	system("pause");
 	return 0;
 }

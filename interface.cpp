@@ -10,7 +10,7 @@ Graph<int>* getDefaultGraph()
     Graph<int> *gr = new Graph<int>(8);
     gr->changeEdge(0, 1, 5);
     gr->changeEdge(0, 2, 9);
-    gr->changeEdge(1, 2, 4);
+    gr->changeEdge(1, 2, 3);
     gr->changeEdge(1, 4, 1);
     gr->changeEdge(2, 3, 2);
     gr->changeEdge(3, 4, 5);
@@ -25,14 +25,14 @@ DirGraph<int>* getDefaultDirGraph()
 {
     DirGraph<int> *gr = new DirGraph<int>(8);
     gr->changeEdge(0, 1, 5);
-    gr->changeEdge(0, 2, 12);
-    gr->changeEdge(1, 2, 4);
+    gr->changeEdge(0, 2, 9);
+    gr->changeEdge(1, 2, 3);
     gr->changeEdge(1, 4, 1);
     gr->changeEdge(2, 3, 2);
     gr->changeEdge(3, 4, 5);
     gr->changeEdge(3, 7, 4);
     gr->changeEdge(4, 5, 9);
-    gr->changeEdge(1, 5, 11);
+    gr->changeEdge(1, 5, 8);
     gr->changeEdge(5, 6, 3);
     gr->changeEdge(6, 7, 4);
     return gr;
