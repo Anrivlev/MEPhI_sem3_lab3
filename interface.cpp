@@ -111,6 +111,9 @@ void interfaceGraph()
     int choose = 0;
     int i = 0;
     int j = 0;
+    int vert1 = 0;
+    int vert2 = 0;
+    int weight = 0;
     Graph<int> *gr;
     ArraySequence<int> *path;
 
@@ -137,6 +140,7 @@ void interfaceGraph()
     while(true)
     {
         cout << "Enter 1 to find a path on the graph:" << endl;
+        cout << "Enter 3 to add or change an edge" << endl;
         cout << "Enter a different number to quit" << endl;
         cin >> choose;
         cout << endl;
@@ -156,6 +160,21 @@ void interfaceGraph()
                 cout << endl;
                 cout << "It's weight: " << gr->getPathWeight(path) << endl;
                 break;
+            case 3:
+                cout << "Enter the first vertex" << endl;
+                cin >> vert1;
+                cout << endl;
+                cout << "Enter the second vertex" << endl;
+                cin >> vert2;
+                cout << endl;
+                cout << "Enter a weight of the edge" << endl;
+                cin >> weight;
+                cout << endl;
+                gr->changeEdge(vert1, vert2, weight);
+                cout << "Adjacency matrix:" << endl;
+                cout << gr->toString();
+                cout << endl;
+                break;
             default:
                 return;
         }
@@ -166,6 +185,9 @@ void interfaceDirGraph()
     int choose = 0;
     int i = 0;
     int j = 0;
+    int vert1 = 0;
+    int vert2 = 0;
+    int weight = 0;
     DirGraph<int> *gr;
     ArraySequence<int> *path;
     ArraySequence<int> *ts;
@@ -197,6 +219,7 @@ void interfaceDirGraph()
         {
             cout << "Enter 1 to find a path on the directed graph:" << endl;
             cout << "Enter 2 to topologically sort the graph" << endl;
+            cout << "Enter 3 to add or change an edge" << endl;
             cout << "Enter a different number to quit" << endl;
             cin >> choose;
             cout << endl;
@@ -221,6 +244,21 @@ void interfaceDirGraph()
                     cout << "The Topological sort:" << endl;
                     for (int i = 0; i < ts->getSize(); i++)
                         cout << ts->get(i) << " ";
+                    cout << endl;
+                    break;
+                case 3:
+                    cout << "Enter the first vertex" << endl;
+                    cin >> vert1;
+                    cout << endl;
+                    cout << "Enter the second vertex" << endl;
+                    cin >> vert2;
+                    cout << endl;
+                    cout << "Enter a weight of the edge" << endl;
+                    cin >> weight;
+                    cout << endl;
+                    gr->changeEdge(vert1, vert2, weight);
+                    cout << "Adjacency matrix:" << endl;
+                    cout << gr->toString();
                     cout << endl;
                     break;
                 default:
